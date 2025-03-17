@@ -104,14 +104,7 @@ public class ExcelHelper {
     public String getCellData(int rowNum, String columnName) {
         return getCellData(rowNum, columns.get(columnName));
     }
-    public static void main(String[] args) {
-        ExcelHelper helper = new ExcelHelper();
-        Object[][] data = helper.getDataHashTable(FrameworkConstants.EXCEL_PLAN_DATA,
-                "Plan Detail", 1, 1);
-        helper.setExcelFile(FrameworkConstants.EXCEL_PLAN_DATA, "Plan Detail");
-        System.out.println(helper.getCellData(1, "year"));
 
-    }
     // Step 1 : Create object XSSFWorkbook
     // Step 2: Get access to sheet
     // Step 3: Get access to all rows of sheet
