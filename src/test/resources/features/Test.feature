@@ -1,75 +1,58 @@
-Feature: User Management
-  As an admin, I want to creat, edit, edit, search users of the system
+@regression
+Feature: Login functionality for OrangeHRM
 
-  Scenario : Add a new user with Admin role
-    Given Admin is on the User Management page
-    When Admin clicks the Add button
-    And  Admin enters the user details
-    And Admin clicks Save button
-    Then Admin should see sucessful created message
+  @smoke @valid @login
+  Scenario: User logs in with valid credentials
+    Given I am on the login page
+    When I enter the username "Admin" and password "admin123"
+    And I click the login button
+    Then I should be redirected to the dashboard page
+    And I should see the welcome message "Welcome Admin"
 
-  Scenario: Add a new user with ESS role
-    Given Admin is on the User Management page
-    When Admin clicks the Add button
-    And  Admin enters the user details
-    And Admin clicks Save button
-    Then Admin should see sucessful created message
+  @negative @login
+  Scenario: User tries to log in with incorrect password
+    Given I am on the login page
+    When I enter the username "Admin" and password "wrongpassword"
+    And I click the login button
+    Then I should see an error message "Invalid credentials"
 
-  Scenario: Edit username of an existing user
-    Given Admin is on the User Management page
-    When Admin selects a user on table and click Edit button
-    And Admin edit user of user
-    And Admin click Save button
-    Then Admin should see sucessful edited message
+  @negative @login @ignore
+  Scenario: User tries to log in with incorrect username
+    Given I am on the login page
+    When I enter the username "InvalidUser" and password "admin123"
+    And I click the login button
+    Then I should see an error message "Invalid credentials"
 
-  Scenario: Edit status of an existing user
-    Given Admin is on the User Management page
-    When Admin selects a user on table and click Edit button
-    And Admin changes the status of user
-    And Admin click Save button
-    Then Admin should see sucessful edited message
+  @negative @login @ignore
+  Scenario: User tries to log in with empty username and password
+    Given I am on the login page
+    When I leave the username field empty and the password field empty
+    And I click the login button
+    Then I should see an error message "Username cannot be empty" and "Password cannot be empty"
 
-  Scenario: Edit user password
-    Given Admin is on the User Management page
-    When Admin selects a user on table and click Edit button
-    And Admin clicks change password checkbox
-    And Admin enter pasword and confirm password
-    And Admin click Save button
-    Then Admin should see sucessful edited message
-
-  Scenario: Edit roles of a user
-    Given Admin is on the User Management page
-    When Admin selects a user and assigns a role
-    Then the role should be updated for the user
-
-  Scenario: Delete a user
-    Given Admin is on the User Management page
-    When Admin selects a user and clicks Delete button
-    And Admin click Confirm button
-    Then Amin should see sucessful deleted message
-
-  Scenario: Search for a user
-    Given Admin is on the User Management page
-    When Admin enters a username in the search bar
-    Then the system should display the corresponding user details
+  @edge @login @ignore
+  Scenario: User tries to log in with special characters in username and password
+    Given I am on the login page
+    When I enter the username "@dm!n" and password "p@ssw0rd$"
+    And I click the login button
+    Then I should see the error message "Invalid credentials"
 
 
-  Scenario: Add a user with invalid data
-    Given Admin is on the User Management page
-    When Admin tries to add a user with missing details
-    Then the system should display an error message
+  @smoke @ignore
+  Scenario Outline: User tries to log in with multiple account
+    Given I am on the login page
+    When I enter the username "<username>" and password "<password>"
+    And I click the login button
+    Then I should be redirected to the dashboard page
+    And I should see the welcome message "Welcome Admin"
+    Examples:
+      | username  | password  |
+      | username1 | password1 |
+      | username2 | password2 |
+      | username3 | password3 |
+      | username4 | password4 |
+      | username5 | password5 |
 
-  Scenario: View user details
-    Given Admin is on the User Management page
-    When Admin clicks on a user's name
-    Then the user details should be displayed
 
-  Scenario: Lock a user account
-    Given Admin is on the User Management page
-    When Admin selects a user and clicks "Lock"
-    Then the user account should be locked
 
-  Scenario: Unlock a user account
-    Given Admin is on the User Management page
-    When Admin selects a locked user and clicks "Unlock"
-    Then the user account should be unlocked
+
