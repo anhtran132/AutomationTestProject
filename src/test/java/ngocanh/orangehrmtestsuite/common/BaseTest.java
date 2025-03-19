@@ -26,7 +26,7 @@ public class BaseTest {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("headless", "--window-size=1920x1080");
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         DriverManager.setDriver(driver);
         driver.get(FrameworkConstants.URL);
         LogUtils.info("Open login page " + FrameworkConstants.URL);
