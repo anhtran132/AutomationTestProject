@@ -1,5 +1,5 @@
 @regression
-Feature: Login functionality for OrangeHRM
+Feature: Test Login functionality for OrangeHRM
 
   @smoke @valid @login
   Scenario: User logs in with valid credentials

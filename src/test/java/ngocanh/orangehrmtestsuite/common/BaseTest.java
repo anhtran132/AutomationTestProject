@@ -26,7 +26,7 @@ public class BaseTest {
         LogUtils.info("Initializing Browser");
         System.out.println(Thread.currentThread().getId() + ": Scenario: " + scenario.getName());
 
-        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : "firefox";
+        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : "chrome";
 
         if(browserName.contains("chrome")){
             ChromeOptions options = new ChromeOptions();
