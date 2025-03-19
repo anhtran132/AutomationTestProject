@@ -131,17 +131,16 @@
 
     </dependencies>
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
-                <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/java/ngocanh/orangehrmtestsuite/runner/testing.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
-
+<!--                <configuration>-->
+<!--                    <parallel>classes</parallel>-->
+<!--                    <threadCount>2</threadCount>-->
+<!--                </configuration>-->
             </plugin>
             <plugin>
                 <!--https://mvnrepository.com/artifact/net.masterthought/maven-cucumber-reporting-->
@@ -169,4 +168,18 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>smoke-tests</id>
+            <properties>
+                <cucumber.options>--tags @smoke</cucumber.options>
+            </properties>
+        </profile>
+        <profile>
+            <id>regression-tests</id>
+            <properties>
+                <cucumber.options>--tags @regression</cucumber.options>
+            </properties>
+        </profile>
+    </profiles>
 </project>

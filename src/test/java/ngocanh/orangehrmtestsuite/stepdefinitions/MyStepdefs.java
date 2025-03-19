@@ -10,7 +10,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import ngocanh.orangehrmtestsuite.common.BaseTest;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
@@ -28,12 +30,21 @@ public class MyStepdefs  {
 
     @When("I enter the username {string} and password {string}")
     public void iEnterTheUsernameAndPassword(String arg0, String arg1) {
+        WebElement username = DriverManager.getDriver()
+                .findElement(By.xpath("//input[@name = 'username']"));
+        username.sendKeys(arg0);
+        WebElement password = DriverManager.getDriver()
+                .findElement(By.xpath("//input[@name = 'password']"));
+        password.sendKeys(arg1);
         System.out.println("I enter the username " + arg0 +" and password " + arg1);
        // Assert.fail("test failed");
     }
 
     @And("I click the login button")
     public void iClickTheLoginButton() {
+        WebElement loginBtn = DriverManager.getDriver()
+                .findElement(By.xpath("//button"));
+        loginBtn.click();
         System.out.println("I click the login button");
        // Assert.fail("test failed");
     }

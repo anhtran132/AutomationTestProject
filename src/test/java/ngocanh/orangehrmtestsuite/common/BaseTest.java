@@ -12,6 +12,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 import java.io.File;
@@ -21,12 +22,22 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
     WebDriver driver;
     @Before()
-    public void initializeBrowser(){
+    public void initializeBrowser(Scenario scenario){
         LogUtils.info("Initializing Browser");
+        System.out.println(Thread.currentThread().getId() + ": Scenario: " + scenario.getName());
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless", "--window-size=1920x1080");
-        driver = new ChromeDriver(options);
+        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : "firefox";
+
+        if(browserName.contains("chrome")){
+            ChromeOptions options = new ChromeOptions();
+            if(browserName.contains("headless")){
+                options.addArguments("headless", "--window-size=1920x1080");
+            }
+            driver = new ChromeDriver(options);
+        }
+        else if(browserName.contains("firefox")){
+            driver = new FirefoxDriver();
+        }
         DriverManager.setDriver(driver);
         driver.get(FrameworkConstants.URL);
         LogUtils.info("Open login page " + FrameworkConstants.URL);
